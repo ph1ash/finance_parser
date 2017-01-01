@@ -58,6 +58,12 @@ class Locations:
                           'amzn'],
                 'amount': 0,
                 'budget': 50
+            },
+            {
+                'category': 'Uncategorized',
+                'names': ['asdfghjkl'],
+                'amount': 0,
+                'budget': 0
             }
         ],
     }

@@ -1,4 +1,5 @@
 import csv
+import re
 from pylab import *
 from collections import namedtuple
 from locations import Locations
@@ -24,7 +25,7 @@ class FinanceManager:
             'trans_type': row_data[1],
             'name': row_data[2],
             'memo': row_data[3],
-            'amount': row_data[4].translate(None, '-')  # Remove the negative since we just want the absolute value of the transaction
+            'amount': re.sub('[-]', '', row_data[4])  # Remove the negative since we just want the absolute value of the transaction
         }
 
     @staticmethod
@@ -37,7 +38,11 @@ class FinanceManager:
                     # print("FOUND \"%s\" in %s: %s @ %s" % (name.upper(), values['name'], values['amount'], date))
                     location['amount'] += float(values['amount'])
                     return
-        print ("NOT FOUND %s: $%s" % (values['name'].upper(), values['amount']))
+        if values['name'].upper() != 'NAME':
+            print ("NOT FOUND %s: $%s" % (values['name'].upper(), values['amount']))
+            max_idx = len(locations['location'])-1
+            locations['location'][max_idx]['amount'] += float(values['amount'])
+
         return
 
     @staticmethod
